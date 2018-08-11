@@ -11,7 +11,7 @@
                             <li class="list-group-item mb-2">
                                 <h4>{{$todo->title}}</h4>
                                 <p>{{$todo->body}}</p>
-                                <small>{{$todo->created_at}}</small>
+                                <small>{{$todo->updated_at}}</small>
                             </li>
                         @endforeach
                     </ul>

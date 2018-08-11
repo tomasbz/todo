@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
+        $todos = Todo::all()->sortByDesc('updated_at');
         return view('dashboard')->with('todos', $todos);
     }
 }
