@@ -79,12 +79,23 @@ class TodoApiController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return TodoResource|\Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $validator = Validator::make(['id' => $id], [
+            'id' => 'exists:todos'
+        ]);
+
+        if($validator->fails()){
+            return $this->validationErrors($validator);
+        }
+
+        $todo = Todo::find($id);
+        $todo->delete();
+
+        return new TodoResource($todo);
     }
 
     /**
