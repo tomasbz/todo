@@ -23,12 +23,26 @@ class TodoApiController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return TodoResource|\Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return $this->validationErrors($validator);
+        }
+
+        $todo = new Todo();
+        $todo->title = $request->input('title');
+        $todo->body = $request->input('body');
+        $todo->save();
+
+        return new TodoResource($todo);
     }
 
     /**
